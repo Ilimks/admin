@@ -17,7 +17,7 @@ const Header = () => {
       <div className="container">
         <div className="header__content">
           <div className="header__deck">
-            <Image src={logo} alt="fone" />
+            <Image src={logo} alt="fone" className='header__deck-img' />
           </div>
           <div className="header__title">
             <Image
