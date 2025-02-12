@@ -1,3 +1,4 @@
+'use client'
 import { useState } from 'react';
 import Image from 'next/image';
 import './Header.css';
@@ -33,12 +34,12 @@ const Header = () => {
       {isPopupVisible && (
         <div className="popup">
           <div className="popup__content">
-            <h4>Вы уверены, что хотите выйти?</h4>
-            <button onClick={() => setIsPopupVisible(false)}>Отмена</button>
+            <h4>Вы уверены, что хотите выйти из аккаунта?</h4>
+            <button onClick={() => setIsPopupVisible(false)}>Нет, остаться</button>
             <button onClick={() => {
               alert('Выход...');
               setIsPopupVisible(false);
-            }}>Да</button>
+            }}>Да, выйти</button>
           </div>
         </div>
       )}

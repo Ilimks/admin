@@ -39,3 +39,44 @@ font-size: 16px;
 color: #fffffa;
 }
 
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .popup__content {
+    background-color: white;
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  .popup__content button {
+    padding: 6px 30px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 10px;
+    border: none;
+    background-color: #C8C8C8;
+    color: #fffffa;
+    margin: 0 20px 30px 20px;
+  }
+  .popup__content button:hover{
+    background-color: #5EB147;
+  }
+
+  .popup__content h4{
+font-family: "Montserrat", sans-serif;
+font-weight: 500;
+font-size: 18px;
+text-align: center;
+color: #000;
+padding: 30px 45px ;
+  }
