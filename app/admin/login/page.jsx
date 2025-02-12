@@ -10,11 +10,11 @@ export default function AdminLogin() {
             <h1 className={montserrat.className} style={{ color: 'white' }}>Вход в аккаунт</h1>
             <div className="form">  {/* Убрали styles.form */}
                 <form>
-                    <div class="input-box">
+                    <div className="input-box">
                         <label>*Логин</label>
                         <input type="text" placeholder="Введите логин" />
                     </div>
-                    <div class="input-box">
+                    <div className="input-box">
                         <label>*Пароль</label>
                         <input type="password" placeholder="Введите пароль" />
 
