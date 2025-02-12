@@ -59,9 +59,9 @@
     cursor: pointer;
     transition: border-color 0.3s ease;
     position: relative;
-  }
+}
   
-  .upload-container__img {
+.upload-container__img {
     max-width: 100%;
     width: 100%;
     height: 100%;
@@ -69,31 +69,31 @@
     justify-content: center;
     align-items: center;
     border-radius: 10px;
-    overflow: hidden; /* Чтобы изображение не выходило за пределы */
+    overflow: hidden;
     position: relative;
-  }
+}
+
+.upload-container__img .image-preview {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.upload-container__img .image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
   
-  .upload-container__img .image-preview {
-    width: 100%;
-    height: 100%;
-    display: block;
-  }
+.upload-container:hover {
+  border-color: #999;
+}
   
-  .upload-container__img .image-preview img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Изображение растягивается с сохранением пропорций */
-  }
-  
-  .upload-container:hover {
-    border-color: #999;
-  }
-  
-  .upload-container .c__news__form__img {
+.upload-container .c__news__form__img {
     display: none;
-  }
+}
   
-  .upload-container .c__news__form__img__upload {
+.upload-container .c__news__form__img__upload {
     padding: 6px 26px;
     font-weight: 400;
     font-size: 16px;
@@ -102,7 +102,7 @@
     border-radius: 8px;
     display: block;
     text-align: center;
-  }
+}
   
   
   
@@ -154,6 +154,22 @@
     font-weight: 400;
     font-size: 18px;
     color: #FFFFFA;
+    cursor: not-allowed;
+}
+
+.c__news__form__btn.active {
+    background-color: #0B3C26;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+
+.c__news__form__btn.active:hover {
+    background-color: #136741;
+}
+  
+.c__news__form__btn.inactive {
+    background-color: #C8C8C8;
+    cursor: not-allowed;
 }
 
 .create__news__get {

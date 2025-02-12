@@ -8,6 +8,8 @@ import Image from 'next/image'
 export default function CreateNews(){
 
   const [imageSrc, setImageSrc] = useState(null);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -17,6 +19,8 @@ export default function CreateNews(){
       setImageSrc(imageUrl);
     }
   };
+
+  const isFormValid = imageSrc && title && description;
   
 
     return (
@@ -42,15 +46,15 @@ export default function CreateNews(){
                       )}
 
                       <label htmlFor="">
-                        <input className='c__news__form__des' type="text" name="" id="" placeholder='Введите заголовок новости'/>
+                        <input onChange={(e) => setTitle(e.target.value)} className='c__news__form__des' type="text" name="" id="" placeholder='Введите заголовок новости'/>
                       </label>
 
                       <label htmlFor="">
-                        <textarea className='c__news__form__text' name="" id="" placeholder='Введите описание новости'></textarea>
+                        <textarea onChange={(e) => setDescription(e.target.value)} className='c__news__form__text' name="" id="" placeholder='Введите описание новости'></textarea>
                       </label>
 
                       <div className="c__news__form__button">
-                        <button className='c__news__form__btn'>Опубликовать новость</button>
+                        <button className={`c__news__form__btn ${isFormValid ? 'active' : 'inactive'}`} disabled={!isFormValid}>Опубликовать новость</button>
                       </div>
                     </form>
                     <div className="create__news__get">
