@@ -158,7 +158,7 @@
 }
 
 .news__options-img{
-    position: fixed;
-    right:28%;
+    position: absolute;
+    right:80%;
 }
 

@@ -8,7 +8,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import useSWR from 'swr';
 import { mutate } from 'swr';
-import vector from "./img/Vector.svg";
+import vector from "./img/vector.svg";
 import icon from "./img/Icon .svg";
 import icon1 from "./img/Icon1.svg";
 import vector2 from "./img/vector2.svg";
@@ -148,6 +148,8 @@ export default function News({ initialNews }) {
               <Image
                 src={showOptions? vector2: vector}
                 alt="vector"
+                className='news__box-block'
+
               />
             </div>
 
