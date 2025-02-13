@@ -6,7 +6,9 @@ import plus from './createNewsIMG/plus.svg'
 import Image from 'next/image'
 import Check from './createNewsIMG/Check.svg'
 import Del from './createNewsIMG/Del.svg'
+import Warning from './createNewsIMG/Warning.svg'
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 export default function CreateNews(){
 
@@ -19,6 +21,7 @@ export default function CreateNews(){
   const [error, setError] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
+  const router = useRouter()
 
   useEffect(() => {
     fetchNews();
@@ -92,6 +95,9 @@ export default function CreateNews(){
       setLoading(false);
     }
   };
+
+
+  
   
   
 
@@ -100,11 +106,11 @@ export default function CreateNews(){
           <section className="create__news">
             <div className="container">
                 <div className="create__news__name-del">
-                    <p className='create__news__name'>Новости</p>
+                    <p onClick={()=>router.push(`/admin/news`)} className='create__news__name'>Новости</p>
                     {newPost && (
                       <>
                       <p className='create__news__del'>Удалить</p>
-                      <Image className='create__news__del__mobile' src={Del} alt="" />
+                      <Image  className='create__news__del__mobile' src={Del} alt="" />
                       </>
                     )}
                 </div>
@@ -121,6 +127,12 @@ export default function CreateNews(){
                     <div className="c__news__box__get__success">
                         <Image className='c__news__box__get__success__img' src={Check} alt="" />
                         <p className="success-message">{successMessage}</p>
+                    </div>
+                    )}
+                    {error && (
+                      <div className="c__news__box__get__error">
+                        <Image className='c__news__box__get__error__img' src={Warning} alt="" />
+                        <p className="error-message">{error}</p>
                     </div>
                     )}
                   </div>
@@ -154,8 +166,6 @@ export default function CreateNews(){
                         <button onClick={handleSubmit} className={`c__news__form__btn ${isFormValid ? 'active' : 'inactive'}`} disabled={!isFormValid || loading}>{loading ? 'Загружается...' : 'Опубликовать новость'}</button>
                       </div>
                     </form>
-
-                    {error && <p className="error-message">{error}</p>}
 
                     <div className="create__news__get">
                       <Image className='create__news__get__line' src={plus} alt="" />
