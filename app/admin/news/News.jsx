@@ -8,6 +8,11 @@ import axios from 'axios';
 import { useState } from 'react';
 import useSWR from 'swr';
 import { mutate } from 'swr';
+import vector from "./img/Vector.svg";
+import icon from "./img/Icon .svg";
+import icon1 from "./img/Icon1.svg";
+import vector2 from "./img/vector2.svg";
+import Image from 'next/image';
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -15,6 +20,7 @@ export default function News({ initialNews }) {
   const [selectedNews, setSelectedNews] = useState([]);
   const [openSelect, setOpenSelect] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [showOptions, setShowOptions] = useState(false)
 
   const { data: news = initialNews, error } = useSWR('https://ades.kg:8086/news/getAllNews', fetcher, {
     fallbackData: initialNews,
@@ -47,6 +53,10 @@ export default function News({ initialNews }) {
   };
 
   if (error) return <p>Ошибка при загрузке новостей</p>;
+
+  const toggleOptions = () => {
+    setShowOptions(!showOptions);
+  };
 
   return (
     <section id="news">
@@ -130,7 +140,30 @@ export default function News({ initialNews }) {
             ): ""}
           </div>
         
-          
+          <div className="news__box-vectors">
+            <div
+              className={`news__box-vector ${showOptions ? "open" : ""}`} 
+              onClick={toggleOptions} 
+            >
+              <Image
+                src={showOptions? vector2: vector}
+                alt="vector"
+              />
+            </div>
+
+            {showOptions && (
+              <div className="news__options show">
+                <button className="news__options-btn">
+                  <Image className="news__options-img" src={icon} alt="icon" />
+                    Добавить файл
+                </button>
+                <button className="news__options-btn">
+                  <Image className="news__options-img" src={icon1} alt="icon" />
+                    Добавить новость
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </section>

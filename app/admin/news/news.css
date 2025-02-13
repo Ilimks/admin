@@ -120,22 +120,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    position: absolute;
-    left: 1100px;
+    position: fixed;
+    bottom: 10%;
+    right: 10%;
+    z-index: 1100;
 }
-
-
 
 .news__options{
-    position: absolute;
-    left: 80%;
-    bottom: 10px;
+    position: fixed;
+    right: 15%;
+    bottom: 15%;
 }
-.news__options-img{
-position: absolute;
-left:12px;
-}
-.news__options-btns{
+.news__options-btn:nth-child(1){
     padding: 6px 42px 6px 19px;
     width: 200px;
     background-color: #232323;
@@ -158,6 +154,12 @@ left:12px;
     margin-bottom: 12px ;
     justify-content: end;
     border: none;
+    position: relative;
+}
+
+.news__options-img{
+    position: fixed;
+    right:28%;
 }
 
 
