@@ -1,57 +1,12 @@
-'use client'
-import './news.css'
-import './news.media.css'
-import addImg from './img/add.svg'
-import delImg from './img/del.svg'
-import { useEffect, useState } from 'react'
+import News from './News';
 
-export default function News() {
-  const [news, setNews] = useState([]);
+export default async function NewsWrapper() {
+  console.log("запрос");
+  const res = await fetch('https://ades.kg:8086/news/getAllNews', {
+    next: { revalidate: 3600 },
+  });
 
-  useEffect(() => {
-    async function fetchNews() {
-      console.log("Отправка запроса..."); // Должно появиться в консоли перед fetch
-      try {
-        const res = await fetch("https://ades.kg:8086/news/getAllNews", {
-          cache: "no-store", 
-        });
-        const data = await res.json();
-        setNews(data);
-        console.log(data)
-      } catch (error) {
-        console.error("Ошибка при загрузке новостей:", error);
-      }
-    }
+  const news = await res.json();
 
-    fetchNews();
-  }, []); 
-  
-  return (
-    <section id="news">
-      <div className="container">
-        <div className="news__box">
-          <div className="news__box__header">
-            <h2>Новости</h2>
-            <div className="news__box__header-buttons">
-              <button>Добавить новость</button>
-              <button>Удалить</button>
-            </div>
-
-            <div className="news__box__header-buttons__mobile">
-              <button><img src={addImg.src} alt="" /></button>
-              <button><img src={delImg.src} alt="" /></button>
-            </div>
-          </div>
-          <div className="news__box__content">
-            {news.map((el, idx) => (
-              <div className="news__box__content-card" key={el.id || idx}>
-                <img src={`https://ades.kg:8086/${el.cover}`} alt={el.title} />
-                <p>{el.title}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+  return <News initialNews={news} />;
 }
