@@ -25,12 +25,13 @@ background-color: #335E45;
 
 .header__title{
     display: flex;
-    margin-left: 450px;
+    margin-left: 430px;
     align-items: center;
     gap: 2px;
 }
 .header__deck{
-    margin: 20px 0 20px 450px;
+    margin: 20px 0 20px 480px;
+
 }
 
 .header__content h3 {
@@ -146,11 +147,9 @@ height: 24px;
       width: 300px;
     }
     .header__title{
-      margin-left: 80px;
+      margin-left: 70px;
     }
     .header__deck{
-      margin-left: 100px;
+      margin-left: 90px;
     }
   }
-
-  

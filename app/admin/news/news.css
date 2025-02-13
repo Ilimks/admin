@@ -88,3 +88,15 @@
     }
 }
 
+
+.news__box-vector {
+    width: 58px;
+    height: 58px;
+    background-color: #5EB147;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    top: 260px;
+}

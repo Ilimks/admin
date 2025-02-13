@@ -2,6 +2,7 @@ import './news.css'
 import './news.media.css'
 import addImg from './img/add.svg'
 import delImg from './img/del.svg'
+import vector from "./img/Vector.svg"
 export default async function News() {
     const res = await fetch('https://ades.kg:8086/news/getAllNews', {
       next: { revalidate: 3600 }, 
@@ -25,14 +26,18 @@ export default async function News() {
               </div>
             </div>
             <div className="news__box__content">
-              {news?news.map((el,idx)=>(
+          
+              {news?news.map((el, idx)=>(
                 <div className="news__box__content-card" key={idx}>
                   <img src={`https://ades.kg:8086/${el.cover}`} alt="" />
                   <p>{el.title}</p>
                 </div>
               )):''}
+              
             </div>
+          
           </div>
+        
         </div>
         
       </section>
