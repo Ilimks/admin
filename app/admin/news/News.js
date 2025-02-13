@@ -1,5 +1,4 @@
 "use client";
-
 import './news.css';
 import './news.media.css';
 import addImg from './img/add.svg';
