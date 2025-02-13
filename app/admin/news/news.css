@@ -70,14 +70,15 @@
         margin-top: 50px;
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: flex-start;
+        gap: 6%;
 
         .news__box__content-card{
             width: 29%;
             height: 250px;
             font-size: 18px;
             font-weight: 500;
-            
+            position: relative;
 
             img{
                 width: 100%;
@@ -89,3 +90,39 @@
     }
 }
 
+
+
+.delete-button {
+    background-color: gray;
+    color: white;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+  
+  .delete-button.active {
+    background-color: red;
+  }
+  
+
+.select_checkbox{
+    position: absolute;
+    right: -5px;
+    top: -5px;
+}
+
+.delete-button {
+    background-color: gray;
+    color: white;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+  
+  .delete-button.active {
+    background-color: red;
+  }
+  
+.select_checkbox{
+    position: absolute;
+    right: -5px;
+    top: -5px;
+}
