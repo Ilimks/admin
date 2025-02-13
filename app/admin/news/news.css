@@ -162,5 +162,85 @@
     right:28%;
 }
 
+body{
+    position: relative;
+}
+
+.news__box__content-uploadFiles{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10000;
 
 
+    .news__box__content-uploadFiles__cards{
+        display: flex;
+        justify-content: space-between;
+        height: 80%;
+        width: 100%;
+        align-items: center;
+
+        .news__box__content-uploadFiles__card{
+            width: 45%;
+            height: 100%;
+            background-color: white;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+
+            h4{
+                font-size: 24px;
+                font-weight: 400;
+            }
+
+            .upload-container:hover {
+                border-color: #999;
+              }
+                
+              .upload-container .c__news__form__img {
+                  display: none;
+              }
+                
+              .upload-container .c__news__form__img__upload {
+                  padding: 6px 26px;
+                  font-weight: 400;
+                  font-size: 16px;
+                  color: #666;
+                  background-color: #f3f3f3;
+                  border-radius: 8px;
+                  display: block;
+                  text-align: center;
+              }
+                
+        }
+    }
+
+    button{
+        width: 100%;
+        height: 15%;
+        border-radius: 13px;
+        border: none;
+        background-color: green;
+        color: white;
+    }
+}
+
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный */
+    z-index: 9999; /* Сделать его поверх контента */
+  }

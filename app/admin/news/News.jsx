@@ -58,6 +58,15 @@ export default function News({ initialNews }) {
     setShowOptions(!showOptions);
   };
 
+  const toggleModalFile = () => {
+    setIsModalOpen(!isModalOpen);
+    if (!isModalOpen) {
+      document.body.style.overflow = 'hidden'; 
+    } else {
+      document.body.style.overflow = ''; 
+    }
+  };
+
   return (
     <section id="news">
       <div className="container">
@@ -125,18 +134,22 @@ export default function News({ initialNews }) {
               <>
                 <div className="news__box__content-uploadFiles__cards">
                   <div className="news__box__content-uploadFiles__card">
-                    <p>В китае</p>
-                    <input type="file" />
+                    <h4>В китае</h4>
+                    <label className='upload-container' htmlFor="fileInput">
+                          <input id="fileInput" className='c__news__form__img' type="file" accept="xlsx/*"/>
+                          <span className="c__news__form__img__upload">Добавить обложку</span>
+                        </label>
                   </div>
                   <div className="news__box__content-uploadFiles__card">
-                    <p>В Кыргызстане</p>
-                    <input type="file" />
+                    <h4>В Кыргызстане</h4>
+                    <label className='upload-container' htmlFor="fileInput">
+                          <input id="fileInput" className='c__news__form__img' type="file" accept="xlsx/*" />
+                          <span className="c__news__form__img__upload">Добавить обложку</span>
+                        </label>
                   </div>
                 </div>
                 <button>Отправить</button>
               </> 
-              
-              
             ): ""}
           </div>
         
@@ -153,7 +166,7 @@ export default function News({ initialNews }) {
 
             {showOptions && (
               <div className="news__options show">
-                <button className="news__options-btn">
+                <button className="news__options-btn" onClick={toggleModalFile}>
                   <Image className="news__options-img" src={icon} alt="icon" />
                     Добавить файл
                 </button>
@@ -166,6 +179,10 @@ export default function News({ initialNews }) {
           </div>
         </div>
       </div>
+
+      {isModalOpen && (
+        <div className="overlay" onClick={toggleModalFile}></div>
+      )}
     </section>
   );
 }
