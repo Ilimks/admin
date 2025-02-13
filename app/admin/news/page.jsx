@@ -2,12 +2,19 @@
 import { useState, useEffect } from "react";
 import "./news.css";
 import "./news.media.css";
+import Image from 'next/image';
 import addImg from "./img/add.svg";
 import delImg from "./img/del.svg";
+import vector from "./img/Vector.svg";
+import icon from "./img/Icon .svg";
+import icon1 from "./img/Icon1.svg";
+import vector2 from "./img/vector2.svg";
+
 export default function News() {
   const [news, setNews] = useState([]);
   const [openSelect, setOpenSelect] = useState(false);
   const [selectedNews, setSelectedNews] = useState([]);
+  const [showOptions, setShowOptions] = useState(false); 
 
   useEffect(() => {
     async function fetchNews() {
@@ -37,6 +44,10 @@ export default function News() {
     setOpenSelect(false);
   };
 
+  const toggleOptions = () => {
+    setShowOptions(!showOptions);
+  };
+
   return (
     <section id="news">
       <div className="container">
@@ -57,9 +68,8 @@ export default function News() {
                 {openSelect ? "Удалить" : "Выбрать"}
               </button>
             </div>
-        
           </div>
-       
+
           <div className="news__box__content">
             {news.length > 0 ? (
               news.map((el) => (
@@ -81,8 +91,36 @@ export default function News() {
             )}
           </div>
         </div>
-     
+
+        <div className="news__box-vectors">
+          <div
+            className={`news__box-vector ${showOptions ? "open" : ""}`} 
+            onClick={toggleOptions} 
+          >
+            <Image
+              src={vector}
+              alt="vector"
+            />
+          </div>
+
+          {showOptions && (
+            <div className="news__options show">
+              <button className="news__options-btns">
+                <Image className="news__options-img" src={icon} alt="icon" />
+                Добавить файл
+              </button>
+              <button className="news__options-btn">
+                <Image className="news__options-img" src={icon1} alt="icon" />
+                Добавить новость
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );
 }
+
+
+
+
