@@ -93,8 +93,7 @@
 
 
 
-.news__box__header-buttons__mobile .delete-button.active,
-  .news__box__header-buttons  .delete-button.active {
+.news__box__header-buttons  .delete-button.active {
     background-color: #FA5656  !important
 }
 
