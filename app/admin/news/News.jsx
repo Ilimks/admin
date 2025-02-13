@@ -13,6 +13,7 @@ import icon from "./img/Icon .svg";
 import icon1 from "./img/Icon1.svg";
 import vector2 from "./img/vector2.svg";
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -21,6 +22,11 @@ export default function News({ initialNews }) {
   const [openSelect, setOpenSelect] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [showOptions, setShowOptions] = useState(false)
+  const [selectedFiles, setSelectedFiles] = useState({
+    china: null,
+    kyrgyzstan: null,
+  });
+  const router = useRouter()
 
   const { data: news = initialNews, error } = useSWR('https://ades.kg:8086/news/getAllNews', fetcher, {
     fallbackData: initialNews,
@@ -58,13 +64,25 @@ export default function News({ initialNews }) {
     setShowOptions(!showOptions);
   };
 
+  const handleFileChange = (event, region) => {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedFiles((prev) => ({ ...prev, [region]: file }));
+    }
+  };
+
   const toggleModalFile = () => {
     setIsModalOpen(!isModalOpen);
-    if (!isModalOpen) {
-      document.body.style.overflow = 'hidden'; 
-    } else {
-      document.body.style.overflow = ''; 
-    }
+    document.body.style.overflow = isModalOpen ? '' : 'hidden';
+  };
+
+
+  const handleRedirect = ()=>{
+    router.push('/admin/createNews')
+  }
+
+  const handleRemoveFile = (region) => {
+    setSelectedFiles((prev) => ({ ...prev, [region]: null }));
   };
 
   return (
@@ -130,27 +148,64 @@ export default function News({ initialNews }) {
           </div>
             
           <div className="news__box__content-uploadFiles">
-            {isModalOpen? (
+          {isModalOpen && (
               <>
                 <div className="news__box__content-uploadFiles__cards">
+                  {/* В Китае */}
                   <div className="news__box__content-uploadFiles__card">
-                    <h4>В китае</h4>
-                    <label className='upload-container' htmlFor="fileInput">
-                          <input id="fileInput" className='c__news__form__img' type="file" accept="xlsx/*"/>
-                          <span className="c__news__form__img__upload">Добавить обложку</span>
-                        </label>
+                    <h4>В Китае</h4>
+                    {selectedFiles.china && (
+                      <div className="file-preview">
+                        <p>{selectedFiles.china.name}</p>
+                        <button
+                          className="delete-file-btn"
+                          onClick={() => handleRemoveFile('china')}
+                        >
+                          ✖
+                        </button>
+                      </div>
+                    )}
+                    <label className="upload-container">
+                      <input
+                        type="file"
+                        accept=".xlsx"
+                        onChange={(e) => handleFileChange(e, 'china')}
+                      />
+                      <span className="c__news__form__img__upload">
+                        Добавить файл
+                      </span>
+                    </label>
                   </div>
+
+                  {/* В Кыргызстане */}
                   <div className="news__box__content-uploadFiles__card">
                     <h4>В Кыргызстане</h4>
-                    <label className='upload-container' htmlFor="fileInput">
-                          <input id="fileInput" className='c__news__form__img' type="file" accept="xlsx/*" />
-                          <span className="c__news__form__img__upload">Добавить обложку</span>
-                        </label>
+                    {selectedFiles.kyrgyzstan && (
+                      <div className="file-preview">
+                        <p>{selectedFiles.kyrgyzstan.name}</p>
+                        <button
+                          className="delete-file-btn"
+                          onClick={() => handleRemoveFile('kyrgyzstan')}
+                        >
+                          ✖
+                        </button>
+                      </div>
+                    )}
+                    <label className="upload-container">
+                      <input
+                        type="file"
+                        accept=".xlsx"
+                        onChange={(e) => handleFileChange(e, 'kyrgyzstan')}
+                      />
+                      <span className="c__news__form__img__upload">
+                        Добавить файл
+                      </span>
+                    </label>
                   </div>
                 </div>
                 <button>Отправить</button>
-              </> 
-            ): ""}
+              </>
+            )}
           </div>
         
           <div className="news__box-vectors">
@@ -170,7 +225,7 @@ export default function News({ initialNews }) {
                   <Image className="news__options-img" src={icon} alt="icon" />
                     Добавить файл
                 </button>
-                <button className="news__options-btn">
+                <button className="news__options-btn" onClick={handleRedirect}>
                   <Image className="news__options-img" src={icon1} alt="icon" />
                     Добавить новость
                 </button>

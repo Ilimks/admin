@@ -19,6 +19,19 @@
         width: 600px;
     }
 
+    .news__box__content-uploadFiles{
+        width: 90%;
+    }
+    
+    .news__box__content-uploadFiles__cards{
+        flex-direction: column;
+
+        .news__box__content-uploadFiles__card{
+            width: 100% !important;
+            height: 45% !important;
+        }
+    }
+
     .news__box__content{
         display: flex;
         flex-direction: column;
