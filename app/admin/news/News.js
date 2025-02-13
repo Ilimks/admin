@@ -6,11 +6,20 @@ import addImg from './img/add.svg';
 import delImg from './img/del.svg';
 import axios from 'axios';
 import { useState } from 'react';
+import useSWR from 'swr';
+import { mutate } from 'swr';
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function News({ initialNews }) {
   const [selectedNews, setSelectedNews] = useState([]);
   const [openSelect, setOpenSelect] = useState(false);
-  const [news, setNews] = useState(initialNews || []);
+
+  const { data: news = initialNews, error } = useSWR('https://ades.kg:8086/news/getAllNews', fetcher, {
+    fallbackData: initialNews,
+    revalidateOnFocus: false,  
+    refreshInterval: 3600 * 1000, 
+  });
 
   const handleSelectNews = (id) => {
     setSelectedNews((prevSelected) =>
@@ -28,13 +37,15 @@ export default function News({ initialNews }) {
           .filter((id) => id)
           .map((id) => axios.delete(`https://ades.kg:8086/news/delete/${id}`))
       );
-      setNews((prevNews) => prevNews.filter((n) => n.id && !selectedNews.includes(n.id)));
       setSelectedNews([]);
       setOpenSelect(false);
+      mutate('https://ades.kg:8086/news/getAllNews');
     } catch (error) {
       console.error('Ошибка при удалении новостей:', error);
     }
   };
+
+  if (error) return <p>Ошибка при загрузке новостей</p>;
 
   return (
     <section id="news">
