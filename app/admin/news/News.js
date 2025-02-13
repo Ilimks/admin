@@ -1,3 +1,4 @@
+
 "use client";
 import './news.css';
 import './news.media.css';
@@ -99,7 +100,7 @@ export default function News({ initialNews }) {
                         checked={selectedNews.includes(el.id)}
                         onChange={() => handleSelectNews(el.id)}
                         className="select_checkbox"/>
-                        <span class="checkmark"></span>
+                        <span className="checkmark"></span>
                       </label>
                     </div>
                   )}
