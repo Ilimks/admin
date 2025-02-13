@@ -70,7 +70,8 @@
         margin-top: 50px;
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: flex-start;
+        gap: 6%;
 
         .news__box__content-card{
             width: 29%;
