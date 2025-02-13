@@ -92,36 +92,16 @@
 
 
 
-.delete-button {
-    background-color: gray;
-    color: white;
-    transition: 0.3s;
-    cursor: pointer;
-  }
-  
-  .delete-button.active {
-    background-color: red;
-  }
-  
 
-.select_checkbox{
-    position: absolute;
-    right: -5px;
-    top: -5px;
+.news__box__header-buttons__mobile .delete-button.active,
+  .news__box__header-buttons  .delete-button.active {
+    background-color: #FA5656  !important
 }
 
-.delete-button {
-    background-color: gray;
-    color: white;
-    transition: 0.3s;
+.cancel-button,
+.delete-button:hover{
     cursor: pointer;
-  }
-  
-  .delete-button.active {
-    background-color: red;
-  }
-  
-
+}
 
 
 .checkbox-container input {

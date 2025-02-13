@@ -4,6 +4,7 @@ import './news.css';
 import './news.media.css';
 import addImg from './img/add.svg';
 import delImg from './img/del.svg';
+import delActive from './img/delActive.svg'
 import axios from 'axios';
 import { useState } from 'react';
 import useSWR from 'swr';
@@ -55,7 +56,7 @@ export default function News({ initialNews }) {
             <h2>Новости</h2>
             <div className="news__box__header-buttons">
               {openSelect ? (
-                <button onClick={() => { setOpenSelect(false); setSelectedNews([]); }}>
+                <button onClick={() => { setOpenSelect(false); setSelectedNews([]); }} className='cancel-button'>
                   Отменить
                 </button>
               ) : (
@@ -84,7 +85,7 @@ export default function News({ initialNews }) {
                 className={`delete-button ${openSelect && selectedNews.length > 0 ? 'active' : ''}`}
                 disabled={openSelect && selectedNews.length === 0}
               >
-                <img src={delImg.src} alt="Удалить" />
+                <img src={selectedNews.length > 0 ? delActive.src : delImg.src} alt="Удалить" className='delete-button'/>
               </button>
             </div>
           </div>
