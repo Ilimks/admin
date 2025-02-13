@@ -10,7 +10,7 @@ export default function News() {
 
   useEffect(() => {
     async function fetchNews() {
-      console.log("Отправка запроса..."); // Должно появиться в консоли перед fetch
+      console.log("Отправка запроса...");
       try {
         const res = await fetch("https://ades.kg:8086/news/getAllNews", {
           cache: "no-store", 

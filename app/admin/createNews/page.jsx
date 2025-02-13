@@ -1,19 +1,37 @@
 "use client"
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './createNews.css'
 import plus from './createNewsIMG/plus.svg'
 import Image from 'next/image'
+import Check from './createNewsIMG/Check.svg'
+import Del from './createNewsIMG/Del.svg'
 import axios from 'axios';
 
 export default function CreateNews(){
 
+  const [newsList, setNewsList] = useState([]);
+  const [newPost, setNewPost] = useState(null);
   const [imageSrc, setImageSrc] = useState(null);
   const [title, setTitle] = useState('');
   const [loading, setLoading] = useState(false);
   const [description, setDescription] = useState('');
   const [error, setError] = useState(null);
   const [imageFile, setImageFile] = useState(null);
+  const [successMessage, setSuccessMessage] = useState('');
+
+  useEffect(() => {
+    fetchNews();
+  }, []);
+
+  const fetchNews = async () => {
+    try {
+      const response = await axios.get("https://ades.kg:8086/news/getAllNews");
+      setNewsList(response.data); 
+    } catch (err) {
+      console.error("Ошибка загрузки новостей:", err);
+    }
+  };
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -35,11 +53,12 @@ export default function CreateNews(){
   
     setLoading(true);
     setError(null);
+    setSuccessMessage('');
   
     const formData = new FormData();
     formData.append('title', title);
     formData.append('content', description);
-    formData.append('cover', imageFile); // Передаем сам файл
+    formData.append('cover', imageFile);
   
     try {
       const response = await axios.post('https://ades.kg:8086/news/createNews', formData, {
@@ -47,14 +66,27 @@ export default function CreateNews(){
           'Content-Type': 'multipart/form-data',
         },
       });
+
+      console.log("Ответ сервера:", response.data);
+
+      
+      const createdPost = {
+        id: response.data.id, 
+        cover: URL.createObjectURL(imageFile), 
+        title,
+        content: description,
+      };
   
-      console.log(response.data);
-      setTitle('');
-      setDescription('');
+      setNewPost(createdPost);
+      setTitle("");
+      setDescription("");
       setImageSrc(null);
-      setImageFile(null); // Очистка файла
+      setImageFile(null);
+      fetchNews();
+      setSuccessMessage('Добавлено!'); 
+      setTimeout(() => setSuccessMessage(''), 3000); 
     } catch (err) {
-      setError('Ошибка при отправке данных');
+      setError('Повторите попытку!');
       console.error(err);
     } finally {
       setLoading(false);
@@ -67,7 +99,32 @@ export default function CreateNews(){
         <>
           <section className="create__news">
             <div className="container">
-                <p className='create__news__name'>Новости</p>
+                <div className="create__news__name-del">
+                    <p className='create__news__name'>Новости</p>
+                    {newPost && (
+                      <>
+                      <p className='create__news__del'>Удалить</p>
+                      <Image className='create__news__del__mobile' src={Del} alt="" />
+                      </>
+                    )}
+                </div>
+                {newPost ? (
+                  <div className="create__news__box__get">
+                    <div className="c__news__box__get__image">
+                        {newPost.cover && <img className='c__news__box__get__img' src={newPost.cover} alt={newPost.title}  />}
+                    </div>
+                    <div className="create__news__content">
+                      <h4 className='create__news__content__title'>{newPost.title}</h4>
+                      <p className='create__news__content__des'>{newPost.content}</p>
+                    </div>
+                    {successMessage && (
+                    <div className="c__news__box__get__success">
+                        <Image className='c__news__box__get__success__img' src={Check} alt="" />
+                        <p className="success-message">{successMessage}</p>
+                    </div>
+                    )}
+                  </div>
+                ) : (
                 <div className="create__news__box">
                     <form className='create__news__form' action="">
                       {!imageSrc && (
@@ -86,11 +143,11 @@ export default function CreateNews(){
                       )}
 
                       <label htmlFor="">
-                        <input onChange={(e) => setTitle(e.target.value)} className='c__news__form__des' type="text" name="" id="" placeholder='Введите заголовок новости'/>
+                        <input onChange={(event) => setTitle(event.target.value)} className='c__news__form__des' type="text" name="" id="" placeholder='Введите заголовок новости'/>
                       </label>
 
                       <label htmlFor="">
-                        <textarea onChange={(e) => setDescription(e.target.value)} className='c__news__form__text' name="" id="" placeholder='Введите описание новости'></textarea>
+                        <textarea onChange={(event) => setDescription(event.target.value)} className='c__news__form__text' name="" id="" placeholder='Введите описание новости'></textarea>
                       </label>
 
                       <div className="c__news__form__button">
@@ -104,6 +161,7 @@ export default function CreateNews(){
                       <Image className='create__news__get__line' src={plus} alt="" />
                     </div>
                 </div>
+              )}
             </div>
           </section>
         </>
