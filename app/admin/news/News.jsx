@@ -132,12 +132,12 @@ export default function News({ initialNews }) {
                 <div className="news__box__content-card" key={idx}>
                   {openSelect && (
                     <div className='position_checkbox'>
-                      <label class="checkbox-container">
+                      <label className="checkbox-container">
                       <input type="checkbox"
                         checked={selectedNews.includes(el.id)}
                         onChange={() => handleSelectNews(el.id)}
                         className="select_checkbox"/>
-                        <span class="checkmark"></span>
+                        <span className="checkmark"></span>
                       </label>
                     </div>
                   )}
