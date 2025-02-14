@@ -91,32 +91,16 @@
 
 
 
-.delete-button {
-    background-color: gray;
-    color: white;
-    transition: 0.3s;
-    cursor: pointer;
-  }
-  
-  .delete-button.active {
-    background-color: red;
-  }
-  
 
-.select_checkbox{
-    position: absolute;
-    right: -5px;
-    top: -5px;
+.news__box__header-buttons  .delete-button.active {
+    background-color: #FA5656  !important
 }
 
 .news__box-vectors{
     position: relative;
 }
+
 .news__box-vector {
-    width: 58px;
-    height: 58px;
-    background-color: #5EB147;
-    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -162,3 +146,59 @@
     right:80%;
 }
 
+.cancel-button,
+.delete-button:hover{
+    cursor: pointer;
+}
+
+
+.checkbox-container input {
+  visibility: hidden;
+  position: absolute;
+}
+
+.checkbox-container {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-container .checkmark {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #f0f0f0; 
+  border-radius: 50%;
+  border: 1px solid #ccc; 
+  transition: background-color 0.2s, border-color 0.2s; 
+}
+
+.checkbox-container input:checked + .checkmark {
+  border-color: #4CAF50; 
+}
+
+.checkbox-container .checkmark::after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkbox-container input:checked + .checkmark::after {
+  display: block;
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid black;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.position_checkbox{
+    position: absolute;
+    right: 10px;
+    top: -5px;
+}

@@ -1,9 +1,10 @@
-"use client";
 
+"use client";
 import './news.css';
 import './news.media.css';
 import addImg from './img/add.svg';
 import delImg from './img/del.svg';
+import delActive from './img/delActive.svg'
 import axios from 'axios';
 import { useState } from 'react';
 import useSWR from 'swr';
@@ -66,7 +67,7 @@ export default function News({ initialNews }) {
             <h2>Новости</h2>
             <div className="news__box__header-buttons">
               {openSelect ? (
-                <button onClick={() => { setOpenSelect(false); setSelectedNews([]); }}>
+                <button onClick={() => { setOpenSelect(false); setSelectedNews([]); }} className='cancel-button'>
                   Отменить
                 </button>
               ) : (
@@ -95,7 +96,7 @@ export default function News({ initialNews }) {
                 className={`delete-button ${openSelect && selectedNews.length > 0 ? 'active' : ''}`}
                 disabled={openSelect && selectedNews.length === 0}
               >
-                <img src={delImg.src} alt="Удалить" />
+                <img src={selectedNews.length > 0 ? delActive.src : delImg.src} alt="Удалить" className='delete-button'/>
               </button>
             </div>
           </div>
@@ -104,12 +105,15 @@ export default function News({ initialNews }) {
               news.map((el, idx) => (
                 <div className="news__box__content-card" key={idx}>
                   {openSelect && (
-                    <input
-                      type="checkbox"
-                      checked={selectedNews.includes(el.id)}
-                      onChange={() => handleSelectNews(el.id)}
-                      className="select_checkbox"
-                    />
+                    <div className='position_checkbox'>
+                      <label className="checkbox-container">
+                      <input type="checkbox"
+                        checked={selectedNews.includes(el.id)}
+                        onChange={() => handleSelectNews(el.id)}
+                        className="select_checkbox"/>
+                        <span className="checkmark"></span>
+                      </label>
+                    </div>
                   )}
                   <img src={`https://ades.kg:8086/${el.cover}`} alt="" />
                   <p>{el.title}</p>
