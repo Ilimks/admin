@@ -28,6 +28,7 @@ export default function News({ initialNews }) {
   });
   const router = useRouter()
 
+
   const { data: news = initialNews, error } = useSWR('https://ades.kg:8086/news/getAllNews', fetcher, {
     fallbackData: initialNews,
     revalidateOnFocus: false,  
@@ -129,7 +130,7 @@ export default function News({ initialNews }) {
           <div className="news__box__content">
             {news.length > 0 ? (
               news.map((el, idx) => (
-                <div className="news__box__content-card" key={idx}>
+                <div className="news__box__content-card" key={idx} onClick={()=>router.push(`/admin/news/${el.id}`)}>
                   {openSelect && (
                     <div className='position_checkbox'>
                       <label className="checkbox-container">
