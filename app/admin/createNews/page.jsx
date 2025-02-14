@@ -11,9 +11,6 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
 export default function CreateNews(){
-
-  const [newsList, setNewsList] = useState([]);
-  const [newPost, setNewPost] = useState(null);
   const [imageSrc, setImageSrc] = useState(null);
   const [title, setTitle] = useState('');
   const [loading, setLoading] = useState(false);
@@ -23,14 +20,6 @@ export default function CreateNews(){
   const [successMessage, setSuccessMessage] = useState('');
   const router = useRouter()
 
-  
-
-  useEffect(() => {
-    axios
-      .get("https://ades.kg:8086/news/getAllNews")
-      .then((response) => setNewsList(response.data))
-      .catch((err) => console.error("Ошибка загрузки новостей:", err));
-  }, []);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -59,36 +48,13 @@ export default function CreateNews(){
       const response = await axios.post("https://ades.kg:8086/news/createNews",formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      setNewPost({
-        id: response.data.id,
-        cover: URL.createObjectURL(imageFile),
-        title,
-        content: description,
-      });
-      setTitle("");
-      setDescription("");
-      setImageSrc(null);
-      setImageFile(null);
+      router.push(`/admin/news/${response.data.id}`)
       setSuccessMessage("Добавлено!");
       setTimeout(() => setSuccessMessage(""), 5000);
     } catch (err) {
       setError("Повторите попытку!");
     } finally {
       setLoading(false);
-    }
-  };
-
-
-  const handleDeletePost = async () => {
-    if (!newPost || !newPost.id) return;
-
-    try {
-      await axios.delete(`https://ades.kg:8086/news/delete/${newPost.id}`);
-      setNewPost(null);
-      setSuccessMessage("Новость удалена!");
-      setTimeout(() => setSuccessMessage(""), 3000);
-    } catch (err) {
-      setError("Ошибка при удалении, попробуйте снова!");
     }
   };
 
@@ -99,36 +65,7 @@ export default function CreateNews(){
             <div className="container">
                 <div className="create__news__name-del">
                     <p onClick={()=>router.push(`/admin/news`)} className='create__news__name'>Новости</p>
-                    {newPost && (
-                      <>
-                      <p onClick={handleDeletePost} className='create__news__del'>Удалить</p>
-                      <Image onClick={handleDeletePost} className='create__news__del__mobile' src={Del} alt="" />
-                      </>
-                    )}
                 </div>
-                {newPost ? (
-                  <div className="create__news__box__get">
-                    <div className="c__news__box__get__image">
-                        {newPost.cover && <img className='c__news__box__get__img' src={newPost.cover} alt={newPost.title}  />}
-                    </div>
-                    <div className="create__news__content">
-                      <h4 className='create__news__content__title'>{newPost.title}</h4>
-                      <p className='create__news__content__des'>{newPost.content}</p>
-                    </div>
-                    {successMessage && (
-                    <div className="c__news__box__get__success">
-                        <Image className='c__news__box__get__success__img' src={Check} alt="" />
-                        <p className="success-message">{successMessage}</p>
-                    </div>
-                    )}
-                    {error && (
-                      <div className="c__news__box__get__error">
-                        <Image className='c__news__box__get__error__img' src={Warning} alt="" />
-                        <p className="error-message">{error}</p>
-                    </div>
-                    )}
-                  </div>
-                ) : (
                 <div className="create__news__box">
                     <form className='create__news__form' action="">
                       {!imageSrc && (
@@ -176,7 +113,6 @@ export default function CreateNews(){
                       <Image className='create__news__get__line' src={plus} alt="" />
                     </div>
                 </div>
-              )}
             </div>
           </section>
         </>
