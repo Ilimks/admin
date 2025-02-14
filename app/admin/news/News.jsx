@@ -1,4 +1,5 @@
 "use client";
+
 import './news.css';
 import './news.media.css';
 import addImg from './img/add.svg';
@@ -130,12 +131,15 @@ export default function News({ initialNews }) {
               news.map((el, idx) => (
                 <div className="news__box__content-card" key={idx}>
                   {openSelect && (
-                    <input
-                      type="checkbox"
-                      checked={selectedNews.includes(el.id)}
-                      onChange={() => handleSelectNews(el.id)}
-                      className="select_checkbox"
-                    />
+                    <div className='position_checkbox'>
+                      <label class="checkbox-container">
+                      <input type="checkbox"
+                        checked={selectedNews.includes(el.id)}
+                        onChange={() => handleSelectNews(el.id)}
+                        className="select_checkbox"/>
+                        <span class="checkmark"></span>
+                      </label>
+                    </div>
                   )}
                   <img src={`https://ades.kg:8086/${el.cover}`} alt="" />
                   <p>{el.title}</p>

@@ -26,6 +26,7 @@
 }
 
 @media (width<850px) {
+
     .container{
         width: 600px;
     }
@@ -43,7 +44,7 @@
         }
     }
 
-    .news__box__content{
+    #news .news__box__content{
         display: flex;
         flex-direction: column;
         height: fit-content;
@@ -52,7 +53,7 @@
 
         .news__box__content-card{
             width: 100% !important;
-            height: 300px !important;
+            height: 400px;
         }
     }
 
@@ -91,6 +92,10 @@
 }
 
 @media (width<650px) {
+
+    #news .news__box .news__box__content-card{
+        height: 300px;
+    }
     .container{
         width: 400px;
     }
