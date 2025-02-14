@@ -23,25 +23,20 @@ export default function CreateNews(){
   const [successMessage, setSuccessMessage] = useState('');
   const router = useRouter()
 
-  useEffect(() => {
-    fetchNews();
-  }, []);
+  
 
-  const fetchNews = async () => {
-    try {
-      const response = await axios.get("https://ades.kg:8086/news/getAllNews");
-      setNewsList(response.data); 
-    } catch (err) {
-      console.error("Ошибка загрузки новостей:", err);
-    }
-  };
+  useEffect(() => {
+    axios
+      .get("https://ades.kg:8086/news/getAllNews")
+      .then((response) => setNewsList(response.data))
+      .catch((err) => console.error("Ошибка загрузки новостей:", err));
+  }, []);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-  
     if (file) {
-      setImageFile(file); 
-      setImageSrc(URL.createObjectURL(file)); 
+      setImageFile(file);
+      setImageSrc(URL.createObjectURL(file));
     }
   };
 
@@ -49,58 +44,55 @@ export default function CreateNews(){
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
-    if (!isFormValid) {
-      return;
-    }
-  
+    if (!imageSrc || !title || !description) return;
+
     setLoading(true);
     setError(null);
-    setSuccessMessage('');
-  
+    setSuccessMessage("");
+
     const formData = new FormData();
-    formData.append('title', title);
-    formData.append('content', description);
-    formData.append('cover', imageFile);
-  
+    formData.append("title", title);
+    formData.append("content", description);
+    formData.append("cover", imageFile);
+
     try {
-      const response = await axios.post('https://ades.kg:8086/news/createNews', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+      const response = await axios.post("https://ades.kg:8086/news/createNews",formData, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
-
-      console.log("Ответ сервера:", response.data);
-
-      
-      const createdPost = {
-        id: response.data.id, 
-        cover: URL.createObjectURL(imageFile), 
+      setNewPost({
+        id: response.data.id,
+        cover: URL.createObjectURL(imageFile),
         title,
         content: description,
-      };
-  
-      setNewPost(createdPost);
+      });
       setTitle("");
       setDescription("");
       setImageSrc(null);
       setImageFile(null);
-      fetchNews();
-      setSuccessMessage('Добавлено!'); 
-      setTimeout(() => setSuccessMessage(''), 3000); 
+      setSuccessMessage("Добавлено!");
+      setTimeout(() => setSuccessMessage(""), 5000);
     } catch (err) {
-      setError('Повторите попытку!');
-      console.error(err);
+      setError("Повторите попытку!");
     } finally {
       setLoading(false);
     }
   };
 
 
-  
-  
-  
+  const handleDeletePost = async () => {
+    if (!newPost || !newPost.id) return;
 
+    try {
+      await axios.delete(`https://ades.kg:8086/news/delete/${newPost.id}`);
+      setNewPost(null);
+      setSuccessMessage("Новость удалена!");
+      setTimeout(() => setSuccessMessage(""), 3000);
+    } catch (err) {
+      setError("Ошибка при удалении, попробуйте снова!");
+    }
+  };
+
+  
     return (
         <>
           <section className="create__news">
@@ -109,8 +101,8 @@ export default function CreateNews(){
                     <p onClick={()=>router.push(`/admin/news`)} className='create__news__name'>Новости</p>
                     {newPost && (
                       <>
-                      <p className='create__news__del'>Удалить</p>
-                      <Image  className='create__news__del__mobile' src={Del} alt="" />
+                      <p onClick={handleDeletePost} className='create__news__del'>Удалить</p>
+                      <Image onClick={handleDeletePost} className='create__news__del__mobile' src={Del} alt="" />
                       </>
                     )}
                 </div>
@@ -147,19 +139,32 @@ export default function CreateNews(){
                       )}
 
                       {imageSrc && (
-                          <label className='upload-container__img' htmlFor="">
+                          <label className='upload-container__img' htmlFor="fileInput">
                               <div className="image-preview">
                                 <img src={imageSrc} alt="Preview"/>
+                                <div className="image-overlay">
+                                  <span className="c__news__form__img__upload1">Добавить обложку</span>
+                                </div>
                               </div>
                           </label>
                       )}
+
+                      <input 
+                        id="fileInput" 
+                        className='c__news__form__img1' 
+                        type="file" 
+                        accept="image/*" 
+                        onChange={handleFileChange} 
+                        style={{ display: "none" }}
+                      />
 
                       <label htmlFor="">
                         <input onChange={(event) => setTitle(event.target.value)} className='c__news__form__des' type="text" name="" id="" placeholder='Введите заголовок новости'/>
                       </label>
 
-                      <label htmlFor="">
-                        <textarea onChange={(event) => setDescription(event.target.value)} className='c__news__form__text' name="" id="" placeholder='Введите описание новости'></textarea>
+                      <label className='textarea__box' htmlFor="">
+                        <textarea onChange={(event) => setDescription(event.target.value)} value={description} maxLength={500} className='c__news__form__text' name="" id="" placeholder='Введите описание новости'></textarea>
+                        <div className="char-counter">{description.length}/500</div>
                       </label>
 
                       <div className="c__news__form__button">

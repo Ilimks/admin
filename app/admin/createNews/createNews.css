@@ -52,7 +52,7 @@
     justify-content: center;
     width: 100%;
     height: 132px;
-    border: 1px dashed #C8C8C8;
+    border: 2px dashed #C8C8C8;
     border-radius: 10px;
     cursor: pointer;
     transition: border-color 0.3s ease;
@@ -74,22 +74,56 @@
 .upload-container__img .image-preview {
   width: 100%;
   height: 100%;
-  display: block;
+  position: relative;
+  display: inline-block;
 }
 
 .upload-container__img .image-preview img {
   width: 100%;
-  height: 100%;
+  height: auto;
   object-fit: cover;
+  display: block;
+  border-radius: 10px;
+}
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2); /* Затемнение */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0; /* Изначально скрыто */
+    transition: opacity 0.3s ease;
+    border-radius: 8px;
+}
+
+.image-preview:hover .image-overlay {
+    opacity: 1; /* Показывается при наведении */
 }
   
 .upload-container:hover {
   border-color: #999;
 }
   
-.upload-container .c__news__form__img {
+.upload-container .c__news__form__img, 
+.c__news__form__img1 {
     display: none;
 }
+
+.c__news__form__img__upload1 {
+    padding: 6px 26px;
+    font-weight: 400;
+    font-size: 16px;
+    color: #666;
+    background-color: #f3f3f3;
+    border-radius: 8px;
+    display: block;
+    text-align: center;
+  }
   
 .upload-container .c__news__form__img__upload {
     padding: 6px 26px;
@@ -119,6 +153,11 @@
     color: #737373;
 }
 
+.textarea__box {
+    position: relative;
+    display: block;
+}
+
 .c__news__form__text {
     border-radius: 10px;
     width: 100%;
@@ -127,6 +166,16 @@
     border: none;
     padding: 15px 20px;
     outline: none;
+    resize: none;
+}
+
+.char-counter {
+    position: absolute;
+    bottom: 12px;
+    right: 10px;
+    font-weight: 400;
+    font-size: 14px;
+    color: gray;
 }
 
 .c__news__form__text::placeholder {
@@ -297,7 +346,7 @@
     }
 
     .create__news__name {
-        margin: 32px 0 27px 22px;
+        margin: 0 0 0 22px;
     }
 
     .create__news__box__get {
@@ -305,7 +354,11 @@
         margin-bottom: 27px;
     }
 
-
+    .create__news__name-del {
+        margin-top: 30px;
+        margin-bottom: 25px;
+    }
+   
     .c__news__form__des {
         margin: 10px 0 ;
         height: 40px;  
